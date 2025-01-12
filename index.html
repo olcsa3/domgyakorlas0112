@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedvenc Dolgok</title>
+    <script>
+        window.onload = function() {
+            // Legördülő lista létrehozása
+            const dropdown = document.createElement('select');
+            dropdown.id = 'category';
+
+            const options = ['Kedvenc ital', 'Kedvenc étel', 'Kedvenc desszert'];
+            options.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                dropdown.appendChild(opt);
+            });
+
+            document.body.appendChild(dropdown);
+
+            // Input mező létrehozása
+            const input = document.createElement('input');
+            input.id = 'inputField';
+            input.type = 'text';
+            input.placeholder = 'Írd be a kedvenced...';
+            document.body.appendChild(input);
+
+            // Gombok létrehozása
+            const addButton = document.createElement('button');
+            addButton.textContent = 'Hozzáadás';
+            addButton.onclick = addItem;
+            document.body.appendChild(addButton);
+
+            const showImageButton = document.createElement('button');
+            showImageButton.textContent = 'Kép megjelenítése';
+            showImageButton.onclick = showImage;
+            document.body.appendChild(showImageButton);
+
+            const removeImageButton = document.createElement('button');
+            removeImageButton.textContent = 'Kép törlése';
+            removeImageButton.onclick = removeImage;
+            document.body.appendChild(removeImageButton);
+        };
+
+        function addItem() {
+            const category = document.getElementById('category').value;
+            const inputValue = document.getElementById('inputField').value.trim();
+
+            if (!inputValue) {
+                alert('Kérlek, írj be egy értéket!');
+                return;
+            }
+
+            let list = document.getElementById(category);
+
+            if (!list) {
+                const paragraph = document.createElement('p');
+                paragraph.textContent = category;
+                document.body.appendChild(paragraph);
+
+                list = document.createElement('ul');
+                list.id = category;
+                document.body.appendChild(list);
+            }
+
+            const listItem = document.createElement('li');
+            listItem.textContent = inputValue;
+            list.appendChild(listItem);
+
+            document.getElementById('inputField').value = '';
+        }
+
+        function showImage() {
+            const category = document.getElementById('category').value;
+            let image = document.getElementById('categoryImage');
+
+            if (image) {
+                alert('A kép már megjelenik.');
+                return;
+            }
+
+            image = document.createElement('img');
+            image.id = 'categoryImage';
+
+            switch (category) {
+                case 'Kedvenc ital':
+                    image.src = 'https://via.placeholder.com/150?text=Ital';
+                    break;
+                case 'Kedvenc étel':
+                    image.src = 'https://via.placeholder.com/150?text=Étel';
+                    break;
+                case 'Kedvenc desszert':
+                    image.src = 'https://via.placeholder.com/150?text=Desszert';
+                    break;
+                default:
+                    alert('Nem megfelelő kategória!');
+                    return;
+            }
+
+            document.body.appendChild(image);
+        }
+
+        function removeImage() {
+            const image = document.getElementById('categoryImage');
+            if (image) {
+                image.remove();
+            } else {
+                alert('Nincs kép megjelenítve.');
+            }
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
